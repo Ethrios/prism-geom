@@ -160,7 +160,7 @@
      <x>0</x>
      <y>0</y>
      <width>971</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAYuda">

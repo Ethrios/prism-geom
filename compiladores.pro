@@ -12,15 +12,20 @@ TARGET = compiladores
 TEMPLATE = app
 
 
-SOURCES += main.C\
-        mainwindow.C \
-    lex.yy.c
+SOURCES +=\
+    mainwindow.cpp \
+    main.cpp \
+    prism.tab.cpp \
+    lex.yy.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    prism.tab.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += \
     recursos.qrc
 
-OTHER_FILES +=
+OTHER_FILES += \
+    prism.y \
+    prism.l

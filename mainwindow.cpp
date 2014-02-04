@@ -1,6 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "lex.yy.c"
+
+#include<stdio.h>
+#include<QDebug>
+#include<iostream>
+
+    extern int yyparse();
+    extern int yylex();
+    extern int yyparse();
+    extern FILE *yyin;
+    extern FILE *file;
+    extern int line;
+    extern QString output;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,25 +62,21 @@ void MainWindow::on_pushButton_clicked()
 
     //abre el archivo de nuevo y lo manda al yylex
 
-
-
     file = fopen("output.txt", "w+");
-    yyin = fopen(mArchivo.toLocal8Bit().data(), "r" );
-    yylex();
-    fclose(file);
-
-
-
-    //Abre el archivo output.txt y pone el contenido en la ventana "analizado"
-
-    QFile oArchivo("output.txt");
-    if(oArchivo.open(QFile::ReadOnly | QFile::Text))
-    {
-        QTextStream in(&oArchivo);
-        QString text = in.readAll();
-        oArchivo.close();
-        ui->analizado->setPlainText(text);
+    if (!file) {
+        qDebug()<<"ERROR: Can't open file!\n";
+        return;
     }
+
+    yyin = fopen(mArchivo.toLocal8Bit().data(), "r" );
+
+    do {
+        yyparse();
+    } while (!feof(yyin));
+
+    ui->analizado->clear();
+    ui->analizado->setPlainText(output);
+    output.clear();
 
 
 }
