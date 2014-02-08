@@ -7,7 +7,7 @@
 class Identifier{
 public:
     enum ID_TYPE{FLOAT,VECT2,VECT3,COLOR,POINT,RECT,CURVE,PLANE,TRIANGLE,QUAD,ELIPSE,CIRC,PARABOLE,HYPERBOLE,
-                 POLYHEDRON,CONE,SPHERE};
+                 POLYHEDRON,CILINDRE,CONE,SPHERE};
     Identifier(QString name,ID_TYPE t){this->name=name;this->type=t;}
     ID_TYPE type;
     QString name;

@@ -82,7 +82,7 @@
     extern int line;
 
     void check_or_insert(QString,Identifier::ID_TYPE);
-
+    void check(QString);
     //QT interface variable;
     QString syntax;
 
@@ -515,12 +515,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    82,    82,    85,    86,    89,    90,    91,    94,    97,
-      98,    99,   100,   101,   102,   103,   104,   105,   106,   107,
-     108,   109,   110,   111,   112,   113,   116,   119,   120,   122,
-     124,   126,   130,   131,   132,   133,   134,   137,   138,   139,
-     140,   141,   142,   145,   148,   151,   154,   157,   160,   161,
-     164,   167
+       0,    82,    82,    85,    86,    89,    90,    91,    94,    96,
+      98,   100,   102,   104,   106,   108,   110,   112,   114,   116,
+     118,   120,   122,   124,   126,   128,   132,   137,   138,   140,
+     142,   144,   148,   149,   150,   151,   152,   157,   158,   159,
+     160,   161,   162,   165,   168,   171,   174,   177,   180,   181,
+     184,   187
 };
 #endif
 
@@ -1593,147 +1593,165 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 94 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new FloatDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].fval));
-                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::FLOAT);
-                                   }
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::FLOAT);}
     break;
 
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 97 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Vect2dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect2d));}
+#line 96 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Vect2dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect2d));
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT2);}
     break;
 
   case 10:
 
 /* Line 1806 of yacc.c  */
 #line 98 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Vect3dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect3d));}
+    {(yyval.declaration) = new Vect3dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect3d));
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT3);}
     break;
 
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 99 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new ColorDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].color));}
+#line 100 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new ColorDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].color));
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::COLOR);}
     break;
 
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 100 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new PointDeclaration((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param));}
+#line 102 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new PointDeclaration((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param));
+                                    check_or_insert(*(yyvsp[(2) - (5)].string),Identifier::POINT);}
     break;
 
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 101 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new RectDeclaration((yyvsp[(2) - (7)].string),(yyvsp[(4) - (7)].param),(yyvsp[(6) - (7)].param)); }
+#line 104 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new RectDeclaration((yyvsp[(2) - (7)].string),(yyvsp[(4) - (7)].param),(yyvsp[(6) - (7)].param));
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::RECT);}
     break;
 
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 102 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 106 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CURVE);}
     break;
 
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 103 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 108 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PLANE);}
     break;
 
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 104 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 110 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (9)].string),Identifier::TRIANGLE);}
     break;
 
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 105 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 112 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::QUAD);}
     break;
 
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 106 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 114 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::ELIPSE);}
     break;
 
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 107 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 116 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::CIRC);}
     break;
 
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 108 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 118 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PARABOLE);}
     break;
 
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 109 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 120 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::HYPERBOLE);}
     break;
 
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 110 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 122 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::POLYHEDRON);}
     break;
 
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 111 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 124 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CILINDRE);}
     break;
 
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 112 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 126 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CONE);}
     break;
 
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 113 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.declaration) = new Declaration; }
+#line 128 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.declaration) = new Declaration;
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::SPHERE);}
     break;
 
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 116 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.asignation) = new Asignation((yyvsp[(1) - (3)].string),(yyvsp[(3) - (3)].expresion));}
+#line 132 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.asignation) = new Asignation((yyvsp[(1) - (3)].string),(yyvsp[(3) - (3)].expresion));
+                                check(*(yyvsp[(1) - (3)].string));
+                              }
     break;
 
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 119 "/home/jesus/Compiladores/Prism/prism.y"
+#line 137 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new ParamExpresion((yyvsp[(1) - (1)].param));}
     break;
 
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 120 "/home/jesus/Compiladores/Prism/prism.y"
+#line 138 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Plus((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la suma no concuerdan");} }
     break;
@@ -1741,7 +1759,7 @@ yyreduce:
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 122 "/home/jesus/Compiladores/Prism/prism.y"
+#line 140 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Less((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la resta no concuerdan");} }
     break;
@@ -1749,7 +1767,7 @@ yyreduce:
   case 30:
 
 /* Line 1806 of yacc.c  */
-#line 124 "/home/jesus/Compiladores/Prism/prism.y"
+#line 142 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Times((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la multiplicacion concuerdan");} }
     break;
@@ -1757,7 +1775,7 @@ yyreduce:
   case 31:
 
 /* Line 1806 of yacc.c  */
-#line 126 "/home/jesus/Compiladores/Prism/prism.y"
+#line 144 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Division((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la division no concuerdan");} }
     break;
@@ -1765,147 +1783,149 @@ yyreduce:
   case 32:
 
 /* Line 1806 of yacc.c  */
-#line 130 "/home/jesus/Compiladores/Prism/prism.y"
+#line 148 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new ColorParam((yyvsp[(1) - (1)].color));}
     break;
 
   case 33:
 
 /* Line 1806 of yacc.c  */
-#line 131 "/home/jesus/Compiladores/Prism/prism.y"
+#line 149 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new FloatParam((yyvsp[(1) - (1)].fval));}
     break;
 
   case 34:
 
 /* Line 1806 of yacc.c  */
-#line 132 "/home/jesus/Compiladores/Prism/prism.y"
+#line 150 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new Vect2dParam((yyvsp[(1) - (1)].vect2d));}
     break;
 
   case 35:
 
 /* Line 1806 of yacc.c  */
-#line 133 "/home/jesus/Compiladores/Prism/prism.y"
+#line 151 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new Vect3dParam((yyvsp[(1) - (1)].vect3d));}
     break;
 
   case 36:
 
 /* Line 1806 of yacc.c  */
-#line 134 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.param)= new IdParam((yyvsp[(1) - (1)].string));}
+#line 152 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.param)= new IdParam((yyvsp[(1) - (1)].string));
+        check(*(yyvsp[(1) - (1)].string));
+      }
     break;
 
   case 37:
 
 /* Line 1806 of yacc.c  */
-#line 137 "/home/jesus/Compiladores/Prism/prism.y"
+#line 157 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].draw);}
     break;
 
   case 38:
 
 /* Line 1806 of yacc.c  */
-#line 138 "/home/jesus/Compiladores/Prism/prism.y"
+#line 158 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].fill);}
     break;
 
   case 39:
 
 /* Line 1806 of yacc.c  */
-#line 139 "/home/jesus/Compiladores/Prism/prism.y"
+#line 159 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].rotate);}
     break;
 
   case 40:
 
 /* Line 1806 of yacc.c  */
-#line 140 "/home/jesus/Compiladores/Prism/prism.y"
+#line 160 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].translate);}
     break;
 
   case 41:
 
 /* Line 1806 of yacc.c  */
-#line 141 "/home/jesus/Compiladores/Prism/prism.y"
+#line 161 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].scale);}
     break;
 
   case 42:
 
 /* Line 1806 of yacc.c  */
-#line 142 "/home/jesus/Compiladores/Prism/prism.y"
+#line 162 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)= new Background((yyvsp[(2) - (2)].param));}
     break;
 
   case 43:
 
 /* Line 1806 of yacc.c  */
-#line 145 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.draw) = new Draw((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param));}
+#line 165 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.draw) = new Draw((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
     break;
 
   case 44:
 
 /* Line 1806 of yacc.c  */
-#line 148 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.fill) = new Fill((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param));}
+#line 168 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.fill) = new Fill((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
     break;
 
   case 45:
 
 /* Line 1806 of yacc.c  */
-#line 151 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.rotate) = new Rotate((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param),(yyvsp[(5) - (5)].param));}
+#line 171 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.rotate) = new Rotate((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param),(yyvsp[(5) - (5)].param));check(*(yyvsp[(2) - (5)].string));}
     break;
 
   case 46:
 
 /* Line 1806 of yacc.c  */
-#line 154 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.scale) = new Scale((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));}
+#line 174 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.scale) = new Scale((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));check(*(yyvsp[(2) - (3)].string));}
     break;
 
   case 47:
 
 /* Line 1806 of yacc.c  */
-#line 157 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.translate) = new Translate((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));}
+#line 177 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.translate) = new Translate((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));check(*(yyvsp[(2) - (3)].string));}
     break;
 
   case 48:
 
 /* Line 1806 of yacc.c  */
-#line 160 "/home/jesus/Compiladores/Prism/prism.y"
+#line 180 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.color)=new Color((yyvsp[(2) - (9)].fval),(yyvsp[(4) - (9)].fval),(yyvsp[(6) - (9)].fval),(yyvsp[(8) - (9)].fval));}
     break;
 
   case 49:
 
 /* Line 1806 of yacc.c  */
-#line 161 "/home/jesus/Compiladores/Prism/prism.y"
+#line 181 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.color)=new Color((yyvsp[(1) - (1)].string));}
     break;
 
   case 50:
 
 /* Line 1806 of yacc.c  */
-#line 164 "/home/jesus/Compiladores/Prism/prism.y"
+#line 184 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect2d)=new Vect2d((yyvsp[(2) - (5)].fval),(yyvsp[(4) - (5)].fval));}
     break;
 
   case 51:
 
 /* Line 1806 of yacc.c  */
-#line 167 "/home/jesus/Compiladores/Prism/prism.y"
+#line 187 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect3d)=new Vect3d((yyvsp[(2) - (7)].fval),(yyvsp[(4) - (7)].fval),(yyvsp[(6) - (7)].fval));}
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1909 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 1929 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2136,7 +2156,7 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 170 "/home/jesus/Compiladores/Prism/prism.y"
+#line 190 "/home/jesus/Compiladores/Prism/prism.y"
  
 
 void check_or_insert(QString name,Identifier::ID_TYPE t){
@@ -2147,6 +2167,13 @@ void check_or_insert(QString name,Identifier::ID_TYPE t){
     else
     {
         symbols.insert(name,new Identifier(name,t));
+    }
+}
+
+void check(QString name){
+    if(!symbols.contains(name))
+    {
+        yyerror("ERROR: Variable no declarada");
     }
 }
 
