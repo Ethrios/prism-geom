@@ -4,14 +4,17 @@
 #include<stdio.h>
 #include<QDebug>
 #include<iostream>
+#include"ast.h"
 
     extern int yyparse();
     extern int yylex();
     extern int yyparse();
     extern FILE *yyin;
-    extern FILE *file;
     extern int line;
-    extern QString output;
+    extern QString tokens;
+    extern QString syntax;
+    extern Root* root;
+    extern QHash<QString, Identifier*> symbols;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -55,29 +58,33 @@ void MainWindow::on_actionAbrir_triggered()
 void MainWindow::on_pushButton_clicked()
 {
 
-    //guarda el archivo editado antes de intentar analizar
-
+    ui->consola->append("Comenzando analisis...");
     on_actionGuardar_triggered();
-
-
-    //abre el archivo de nuevo y lo manda al yylex
-
-    file = fopen("output.txt", "w+");
-    if (!file) {
-        qDebug()<<"ERROR: Can't open file!\n";
-        return;
-    }
 
     yyin = fopen(mArchivo.toLocal8Bit().data(), "r" );
 
-    do {
+    do
+    {
         yyparse();
-    } while (!feof(yyin));
+    }
+    while (!feof(yyin));
 
-    ui->analizado->clear();
-    ui->analizado->setPlainText(output);
-    output.clear();
+    ui->consola->append("TOKEN,LEXEMA");
+    ui->consola->append(tokens);
+    ui->consola->append(syntax);
+    tokens.clear();
+    syntax.clear();
 
+    QHash<QString, Identifier*>::const_iterator i = symbols.constBegin();
+    int row = 0;
+    while (i != symbols.constEnd()) {
+        this->ui->tableWidget->insertRow(row);
+        this->ui->tableWidget->setItem(row,0,new QTableWidgetItem(i.key()));
+        this->ui->tableWidget->setItem(row,1,new QTableWidgetItem(i.value()->type_string()));
+        //cout << i.key() << ": " << i.value()-> << endl;
+        ++i;
+        ++row;
+    }
 
 }
 

@@ -1,11 +1,12 @@
 %option noyywrap
 
 %{
-#include<stdio.h>
+#include<cstdlib>
+#include"ast.h"
 #include"prism.tab.h"
 #include<QString>
-FILE *file;
-QString output;
+
+QString tokens;
 int line = 0;
 %}
 
@@ -15,108 +16,111 @@ ID       [a-zA-Z][a-zA-Z0-9]*
 %%
 
 
-("+"|"-")?{DIGIT}+("."{DIGIT}*)?   {    output+="PTO_FLOT,"; output+=yytext; output+='\n';
+("+"|"-")?{DIGIT}+("."{DIGIT}*)?   {    tokens+="<PTO_FLOT>, \""; tokens+=yytext; tokens+="\"\n";
+                                                                        yylval.fval = atof(yytext);
 									return PTO_FLOT;}
 
-Inicio			{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Inicio			{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return INICIO;}
 
-Fin			{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Fin			{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FIN;}
 
-Dibujar		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Dibujar		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return DIBUJAR;}
 
-Fondo 				{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Fondo 				{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FONDO;}
 
-Rellenar	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Rellenar	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return RELLENAR;}
 
-Color		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Color		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return COLOR;}
 
-Rotar		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Rotar		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ROTAR;}
 
-Escalar 	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Escalar 	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ESCALAR;}
 								
-Trasladar	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Trasladar	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return TRASLADAR;}
 
-Sobre	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Sobre	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return SOBRE;}
 
-Flotante	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Flotante	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FLOTANTE;}
 
-Vector2d	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Vector2d	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return VECT2D;}
 
-Vector3d	{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Vector3d	{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return VECT3D;}
 
-Punto		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Punto		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PUNTO;}
 
-Recta		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Recta		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return RECTA;}
 
-Curva		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Curva		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CURVA;}
 
-Plano		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Plano		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PLANO;}
 
-Triangulo		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Triangulo		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return TRIANGULO;}
 
-Cuadrilatero		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Cuadrilatero		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CUADRILATERO;}
 
-Elipse		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Elipse		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ELIPSE;}
 
-Circunferencia		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Circunferencia		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CIRCUNFERENCIA;}
 
-Parabola		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Parabola		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PARABOLA;}
 
-Hiperbola		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Hiperbola		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return HIPERBOLA;}
 
-Poliedro		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Poliedro		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return POLIEDRO;}
 
-Cilindro		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Cilindro		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CILINDRO;}
 
-Cono		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Cono		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CONO;}
 
-Esfera		{fprintf(file, "<palabra_reservada> %s\n", yytext);
+Esfera		{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ESFERA;}
 
-NEGRO|AZUL|CIAN|GRIS|VERDE|MAGENTA|NARANJA|ROSADO|ROJO|BLANCO|AMARILLO       {fprintf(file, "<palabra_reservada> %s\n", yytext );
-																				return COLOR_PREDEF;}
+NEGRO|AZUL|CIAN|GRIS|VERDE|MAGENTA|NARANJA|ROSADO|ROJO|BLANCO|AMARILLO       {tokens +=  "<COLOR_PREDEF>, \"";tokens += yytext; tokens += "\"\n";
+                                                                                yylval.string = new QString(QString::fromLocal8Bit(yytext));
+                                                                                return COLOR_PREDEF;}
 
-{ID}        {fprintf(file, "<identificador> %s\n", yytext );
+{ID}        {tokens +=  "<ID>, \" "; tokens +=yytext; tokens += "\"\n";
+                                yylval.string = new QString(QString::fromLocal8Bit(yytext));
 				return ID; }
 
-"=" 	{fprintf(file,"<asignacion>: %s\n", yytext );
+"="     {tokens += "<ASIGN>, \""; tokens += yytext; tokens += "\"\n";
 			return yytext[0]; }
 
-"+"|"-"|"*"|"/"   {fprintf(file, "<operador> %s\n", yytext );
+"+"|"-"|"*"|"/"   {tokens +=  "<OP>, \"" ;tokens += yytext; tokens += "\"\n";
 						return yytext[0]; }
-"{"|"}"|";"|","|"("|")"   {fprintf(file, "<delimitador> %s\n", yytext);
+"{"|"}"|";"|","|"("|")"   {tokens +=  "<DELIMITADOR>, \"" ;tokens += yytext; tokens += "\"\n";
 							return yytext[0]; }
 
 "\n"		{ line++;}   /* count lines */ 
 
 [ \t]+          /* eat up whitespace */
 
-.           fprintf(file, "<caracter_invalido> %s\n", yytext );
+.           {tokens +=  "<CARACTER_INVALIDO>, \""; tokens += yytext; tokens += "\"\n";}
 
 %%

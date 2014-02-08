@@ -19,7 +19,9 @@ SOURCES +=\
     lex.yy.cpp
 
 HEADERS  += mainwindow.h \
-    prism.tab.h
+    prism.tab.h \
+    ast.h \
+    ast_declaration.h
 
 FORMS    += mainwindow.ui
 

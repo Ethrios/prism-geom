@@ -1,5 +1,4 @@
 Inicio
 
-Dibujar Triangulo {(0,0),(1,0),(0,1)} Color AMARILLO Borde (0.33,0.33,0,0);
-
+Dibujar Triangulo {(0,0),(1,0),(0,1)} Color AMARILLO;
 Fin

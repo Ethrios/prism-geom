@@ -77,15 +77,32 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 13 "/home/jesus/Compiladores/Entrega2/prism.y"
+#line 30 "/home/jesus/Compiladores/Prism/prism.y"
 
         float fval;
-		  char* cval;
+        QString* string;
+        std::vector<Sentence*>* sentence_list;
+        Sentence* sentence;
+        Declaration* declaration;
+        Asignation* asignation;
+        Function* function;
+        Draw* draw;
+        Background* background;
+        Fill* fill;
+        Rotate* rotate;
+        Translate* translate;
+        Scale* scale;
+        Param* param;
+        Vect* vect;
+        Vect2d* vect2d;
+        Vect3d* vect3d;
+        Color * color;
+        Expresion* expresion;
 
 
 
 /* Line 2068 of yacc.c  */
-#line 89 "/home/jesus/Compiladores/Entrega2/prism.tab.h"
+#line 106 "/home/jesus/Compiladores/Prism/prism.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
