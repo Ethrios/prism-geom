@@ -83,7 +83,7 @@
 
     int errors = 0;
 
-    void check_or_insert(QString,Identifier::ID_TYPE);
+    void check_or_insert(QString,DATATYPE);
     bool check(QString);
     //QT interface variable;
     QString syntax;
@@ -522,8 +522,8 @@ static const yytype_uint16 yyrline[] =
      102,   104,   106,   108,   110,   112,   114,   116,   118,   120,
      122,   124,   126,   128,   130,   132,   136,   141,   142,   144,
      146,   148,   152,   153,   154,   155,   156,   161,   162,   163,
-     164,   165,   166,   169,   172,   175,   200,   225,   250,   260,
-     263,   266
+     164,   165,   166,   169,   181,   195,   212,   227,   242,   252,
+     255,   258
 };
 #endif
 
@@ -1603,7 +1603,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 98 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new FloatDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].fval));
-                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::FLOAT);}
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),FLOAT_DT);}
     break;
 
   case 9:
@@ -1611,7 +1611,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 100 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Vect2dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect2d));
-                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT2);}
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),VECT2_DT);}
     break;
 
   case 10:
@@ -1619,7 +1619,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 102 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Vect3dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect3d));
-                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT3);}
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),VECT3_DT);}
     break;
 
   case 11:
@@ -1627,7 +1627,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 104 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new ColorDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].color));
-                                    check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::COLOR);}
+                                    check_or_insert(*(yyvsp[(2) - (3)].string),COLOR_DT);}
     break;
 
   case 12:
@@ -1635,7 +1635,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 106 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new PointDeclaration((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param));
-                                    check_or_insert(*(yyvsp[(2) - (5)].string),Identifier::POINT);}
+                                    check_or_insert(*(yyvsp[(2) - (5)].string),POINT_DT);}
     break;
 
   case 13:
@@ -1643,7 +1643,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 108 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new RectDeclaration((yyvsp[(2) - (7)].string),(yyvsp[(4) - (7)].param),(yyvsp[(6) - (7)].param));
-                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::RECT);}
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),RECT_DT);}
     break;
 
   case 14:
@@ -1651,7 +1651,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 110 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CURVE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),CURVE_DT);}
     break;
 
   case 15:
@@ -1659,7 +1659,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 112 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PLANE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),PLANE_DT);}
     break;
 
   case 16:
@@ -1667,7 +1667,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 114 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (9)].string),Identifier::TRIANGLE);}
+                                    check_or_insert(*(yyvsp[(2) - (9)].string),TRIANGLE_DT);}
     break;
 
   case 17:
@@ -1675,7 +1675,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 116 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (11)].string),Identifier::QUAD);}
+                                    check_or_insert(*(yyvsp[(2) - (11)].string),QUAD_DT);}
     break;
 
   case 18:
@@ -1683,7 +1683,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 118 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::ELIPSE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),ELIPSE_DT);}
     break;
 
   case 19:
@@ -1691,7 +1691,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 120 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::CIRC);}
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),CIRC_DT);}
     break;
 
   case 20:
@@ -1699,7 +1699,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 122 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PARABOLE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),PARABOLE_DT);}
     break;
 
   case 21:
@@ -1707,7 +1707,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 124 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::HYPERBOLE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),HYPERBOLE_DT);}
     break;
 
   case 22:
@@ -1715,7 +1715,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 126 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::POLYHEDRON);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),POLYHEDRON_DT);}
     break;
 
   case 23:
@@ -1723,7 +1723,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 128 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CILINDRE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),CILINDRE_DT);}
     break;
 
   case 24:
@@ -1731,7 +1731,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 130 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CONE);}
+                                    check_or_insert(*(yyvsp[(2) - (4)].string),CONE_DT);}
     break;
 
   case 25:
@@ -1739,7 +1739,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 132 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::SPHERE);}
+                                    check_or_insert(*(yyvsp[(2) - (7)].string),SPHERE_DT);}
     break;
 
   case 26:
@@ -1823,7 +1823,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 156 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new IdParam((yyvsp[(1) - (1)].string));
-        check(*(yyvsp[(1) - (1)].string));
+                check(*(yyvsp[(1) - (1)].string));
       }
     break;
 
@@ -1873,41 +1873,53 @@ yyreduce:
 
 /* Line 1806 of yacc.c  */
 #line 169 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.draw) = new Draw((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
+    { (yyval.draw) = new Draw((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param));
+    if(check(*(yyvsp[(2) - (4)].string)))
+    {
+        Identifier* id = symbols.value(*(yyvsp[(2) - (4)].string));
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+            yyerror("ERROR: Solo se pueden dibujar figuras GEOM2D o GEOM3D");
+    if((yyvsp[(4) - (4)].param)->type!=COLOR_DT)
+        yyerror("ERROR: El parametro de Color debe ser un Color valido rgba o un color predefinido" );
+    }
+}
     break;
 
   case 44:
 
 /* Line 1806 of yacc.c  */
-#line 172 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.fill) = new Fill((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
+#line 181 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.fill) = new Fill((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));
+    if(check(*(yyvsp[(2) - (4)].string)))
+    {
+        Identifier* id = symbols.value(*(yyvsp[(2) - (4)].string));
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+            yyerror("ERROR: Solo se pueden dibujar figuras GEOM2D o GEOM3D");
+        if((yyvsp[(4) - (4)].param)->type!=COLOR_DT){
+            yyerror("ERROR: El parametro de Color debe ser un Color valido rgba o un color predefinido" );
+        }
+
+    }
+}
     break;
 
   case 45:
 
 /* Line 1806 of yacc.c  */
-#line 175 "/home/jesus/Compiladores/Prism/prism.y"
+#line 195 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.rotate) = new Rotate((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param),(yyvsp[(5) - (5)].param));
     if(check(*(yyvsp[(2) - (5)].string)))
     {
         Identifier* id = symbols.value(*(yyvsp[(2) - (5)].string));
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
             yyerror("ERROR: Solo se pueden rotar figuras GEOM2D o GEOM3D");
-        }else if((yyvsp[(4) - (5)].param)->type == Param::ID){
-            IdParam* idparam = (IdParam*)(yyvsp[(4) - (5)].param);
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(4) - (5)].param)->type!=Param::VECT2D){
-            yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(4) - (5)].param)->type!=Param::VECT3D){
-            yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
+        else if(id->dimension == Identifier::GEOM2D && (yyvsp[(4) - (5)].param)->type!=VECT2_DT){
+            yyerror("ERROR: El punto de rotacion ser un Vector2d" );
+        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(4) - (5)].param)->type!=VECT3_DT){
+            yyerror("ERROR: El punto de rotacion debe ser un Vector3d" );
         }
+        if((yyvsp[(5) - (5)].param)->type!=FLOAT_DT)
+            yyerror("ERROR: El parametro de rotacion debe ser un Flotante");
     }
 }
     break;
@@ -1915,55 +1927,35 @@ yyreduce:
   case 46:
 
 /* Line 1806 of yacc.c  */
-#line 200 "/home/jesus/Compiladores/Prism/prism.y"
+#line 212 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.scale) = new Scale((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));
-    if(check(*(yyvsp[(2) - (3)].string)))
-    {
-        Identifier* id = symbols.value(*(yyvsp[(2) - (3)].string));
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
-            yyerror("ERROR: Solo se pueden escalar figuras GEOM2D o GEOM3D");
-        }else if((yyvsp[(3) - (3)].param)->type == Param::ID){
-            IdParam* idparam = (IdParam*)(yyvsp[(3) - (3)].param);
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=Param::VECT2D){
-            yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=Param::VECT3D){
-            yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
-        }
+if(check(*(yyvsp[(2) - (3)].string)))
+{
+    Identifier* id = symbols.value(*(yyvsp[(2) - (3)].string));
+    if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+        yyerror("ERROR: Solo se pueden escalar figuras GEOM2D o GEOM3D");
+    else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=VECT2_DT){
+        yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
+    }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=VECT3_DT){
+        yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
     }
+}
 }
     break;
 
   case 47:
 
 /* Line 1806 of yacc.c  */
-#line 225 "/home/jesus/Compiladores/Prism/prism.y"
+#line 227 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.translate) = new Translate((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));
     if(check(*(yyvsp[(2) - (3)].string)))
     {
         Identifier* id = symbols.value(*(yyvsp[(2) - (3)].string));
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
             yyerror("ERROR: Solo se pueden trasladar figuras GEOM2D o GEOM3D");
-        }else if((yyvsp[(3) - (3)].param)->type == Param::ID){
-            IdParam* idparam = (IdParam*)(yyvsp[(3) - (3)].param);
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=Param::VECT2D){
+        else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=VECT2_DT){
             yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=Param::VECT3D){
+        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=VECT3_DT){
             yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
         }
     }
@@ -1973,7 +1965,7 @@ yyreduce:
   case 48:
 
 /* Line 1806 of yacc.c  */
-#line 250 "/home/jesus/Compiladores/Prism/prism.y"
+#line 242 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.color)=new Color((yyvsp[(2) - (9)].fval),(yyvsp[(4) - (9)].fval),(yyvsp[(6) - (9)].fval),(yyvsp[(8) - (9)].fval));
                                                                 if((yyvsp[(2) - (9)].fval)<0||(yyvsp[(2) - (9)].fval)>1)
                                                                     yyerror("ERROR: El componente de rojo del color debe estar entre 0 y 1");
@@ -1989,28 +1981,28 @@ yyreduce:
   case 49:
 
 /* Line 1806 of yacc.c  */
-#line 260 "/home/jesus/Compiladores/Prism/prism.y"
+#line 252 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.color)=new Color((yyvsp[(1) - (1)].string));}
     break;
 
   case 50:
 
 /* Line 1806 of yacc.c  */
-#line 263 "/home/jesus/Compiladores/Prism/prism.y"
+#line 255 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect2d)=new Vect2d((yyvsp[(2) - (5)].fval),(yyvsp[(4) - (5)].fval));}
     break;
 
   case 51:
 
 /* Line 1806 of yacc.c  */
-#line 266 "/home/jesus/Compiladores/Prism/prism.y"
+#line 258 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect3d)=new Vect3d((yyvsp[(2) - (7)].fval),(yyvsp[(4) - (7)].fval),(yyvsp[(6) - (7)].fval));}
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 2014 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 2006 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2241,10 +2233,10 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 269 "/home/jesus/Compiladores/Prism/prism.y"
+#line 261 "/home/jesus/Compiladores/Prism/prism.y"
  
 
-void check_or_insert(QString name,Identifier::ID_TYPE t){
+void check_or_insert(QString name,DATATYPE t){
     if(symbols.contains(name))
     {
         yyerror("ERROR: No se puede redefinir una variable ya declarada" );

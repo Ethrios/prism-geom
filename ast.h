@@ -3,19 +3,27 @@
 
 #include<vector>
 #include<QString>
+#include<QHash>
+#include<QDebug>
+class Identifier;
+extern QHash<QString, Identifier*> symbols;
+
+enum DATATYPE{FLOAT_DT,VECT2_DT,VECT3_DT,COLOR_DT,POINT_DT,RECT_DT,CURVE_DT,PLANE_DT,TRIANGLE_DT,QUAD_DT,ELIPSE_DT,CIRC_DT,
+              PARABOLE_DT,HYPERBOLE_DT,
+             POLYHEDRON_DT,CILINDRE_DT,CONE_DT,SPHERE_DT,NONE_DT};
 
 class Identifier{
 public:
-    enum ID_TYPE{FLOAT,VECT2,VECT3,COLOR,POINT,RECT,CURVE,PLANE,TRIANGLE,QUAD,ELIPSE,CIRC,PARABOLE,HYPERBOLE,
-                 POLYHEDRON,CILINDRE,CONE,SPHERE};
+
     enum ID_DIMENSION{GEOM2D,GEOM3D,NONE};
-    Identifier(QString name,ID_TYPE t){
+    Identifier(QString name,DATATYPE t){
         this->name=name;
         this->type=t;
-        if(t==VECT2||t==POINT||t==RECT||t==CURVE||t==PLANE||t==TRIANGLE||t==QUAD||t==ELIPSE||t==CIRC||t==PARABOLE||t==HYPERBOLE)
+        if(t==VECT2_DT||t==POINT_DT||t==RECT_DT||t==CURVE_DT||t==PLANE_DT||t==TRIANGLE_DT||t==QUAD_DT
+                ||t==ELIPSE_DT||t==CIRC_DT||t==PARABOLE_DT||t==HYPERBOLE_DT)
         {
             this->dimension=GEOM2D;
-        }else if(t==VECT3||t==POLYHEDRON||t==CILINDRE||t==CONE||t==SPHERE)
+        }else if(t==VECT3_DT||t==POLYHEDRON_DT||t==CILINDRE_DT||t==CONE_DT||t==SPHERE_DT)
         {
             this->dimension=GEOM3D;
         }
@@ -25,45 +33,45 @@ public:
         }
         referenced=false;
     }
-    ID_TYPE type;
+    DATATYPE type;
     ID_DIMENSION dimension;
     QString name;
     bool referenced;
     QString type_string(){
         switch (type) {
-        case Identifier::FLOAT:
+        case FLOAT_DT:
             return "Flotante";
-        case Identifier::VECT2:
+        case VECT2_DT:
             return "Vector2d";
-        case Identifier::VECT3:
+        case VECT3_DT:
             return "Vector3d";
-        case Identifier::COLOR:
+        case COLOR_DT:
             return "Color";
-        case Identifier::POINT:
+        case POINT_DT:
             return "Punto";
-        case Identifier::RECT:
+        case RECT_DT:
             return "Recta";
-        case Identifier::CURVE:
+        case CURVE_DT:
             return "Curva";
-        case Identifier::PLANE:
+        case PLANE_DT:
             return "Plano";
-        case Identifier::TRIANGLE:
+        case TRIANGLE_DT:
             return "Triangulo";
-        case Identifier::QUAD:
+        case QUAD_DT:
             return "Cuadrilatero";
-        case Identifier::ELIPSE:
+        case ELIPSE_DT:
             return "Elipse";
-        case Identifier::CIRC:
+        case CIRC_DT:
             return "Circunferencia";
-        case Identifier::PARABOLE:
+        case PARABOLE_DT:
             return "Parabola";
-        case Identifier::HYPERBOLE:
+        case HYPERBOLE_DT:
             return "Hiperbola";
-        case Identifier::POLYHEDRON:
+        case POLYHEDRON_DT:
             return "Poliedro";
-        case Identifier::CONE:
+        case CONE_DT:
             return "Cono";
-        case Identifier::SPHERE:
+        case SPHERE_DT:
             return "Esfera";
         default:
             return "ERROR";
@@ -71,9 +79,9 @@ public:
     }
     QString dimension_string(){
         switch (dimension) {
-        case Identifier::GEOM2D:
+        case GEOM2D:
             return "GEOM2D::";
-        case Identifier::GEOM3D:
+        case GEOM3D:
             return "GEOM3D::";
         default:
             return "";
@@ -117,39 +125,47 @@ public:
 
 class Param{
 public:
-    enum PARAM_TYPE{FLOAT,VECT2D,VECT3D,COLOR,ID};
-    //semantic_value what should this be?
-    PARAM_TYPE type;
+    DATATYPE type;
+    bool isID;
 };
 
 class Vect2dParam : public Param{
 public:
-    Vect2dParam(Vect2d* v){this->v2d=v;type=Param::VECT2D;}
+    Vect2dParam(Vect2d* v){this->v2d=v;type=VECT2_DT;this->isID=false;}
     Vect2d* v2d;
 };
 
 class Vect3dParam : public Param{
 public:
-    Vect3dParam(Vect3d* v){this->v3d=v;type=Param::VECT3D;}
+    Vect3dParam(Vect3d* v){this->v3d=v;type=VECT3_DT;this->isID=false;}
     Vect3d* v3d;
 
 };
 
 class IdParam : public Param{
 public:
-    IdParam(QString* id){this->id=id;type=Param::ID;}
-    QString* id;
+    IdParam(QString* id){
+        this->isID =true;
+        if(symbols.contains(*id)){
+            this->id=symbols.value(*id);
+            this->type=this->id->type;
+        }else{
+            this->id=NULL;
+            this->type=NONE_DT;
+        }
+    }
+    Identifier* id;
 };
 
 class FloatParam : public Param{
 public:
-    FloatParam(float f){this->f=f;type=Param::FLOAT;}
+    FloatParam(float f){this->f=f;type=FLOAT_DT;this->isID=false;}
     float f;
 };
 
 class ColorParam : public Param{
 public:
-    ColorParam(Color* c){this->color = c;type=Param::COLOR;}
+    ColorParam(Color* c){this->color = c;type=COLOR_DT;this->isID=false;}
     Color* color;
 };
 

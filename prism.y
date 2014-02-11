@@ -14,7 +14,7 @@
 
     int errors = 0;
 
-    void check_or_insert(QString,Identifier::ID_TYPE);
+    void check_or_insert(QString,DATATYPE);
     bool check(QString);
     //QT interface variable;
     QString syntax;
@@ -96,41 +96,41 @@ Sentencia : Declaracion ';' {$$ = $1;}
 ; 
 
 Declaracion : FLOTANTE ID PTO_FLOT {$$ = new FloatDeclaration($2,$3);
-                                    check_or_insert(*$2,Identifier::FLOAT);}
+                                    check_or_insert(*$2,FLOAT_DT);}
                 |VECT2D ID Vect2d {$$ = new Vect2dDeclaration($2,$3);
-                                    check_or_insert(*$2,Identifier::VECT2);}
+                                    check_or_insert(*$2,VECT2_DT);}
                 |VECT3D ID Vect3d {$$ = new Vect3dDeclaration($2,$3);
-                                    check_or_insert(*$2,Identifier::VECT3);}
+                                    check_or_insert(*$2,VECT3_DT);}
                 |COLOR ID Color {$$ = new ColorDeclaration($2,$3);
-                                    check_or_insert(*$2,Identifier::COLOR);}
+                                    check_or_insert(*$2,COLOR_DT);}
                 |PUNTO ID '{' Param '}' {$$ = new PointDeclaration($2,$4);
-                                    check_or_insert(*$2,Identifier::POINT);}
+                                    check_or_insert(*$2,POINT_DT);}
                 |RECTA ID '{' Param ',' Param '}' {$$ = new RectDeclaration($2,$4,$6);
-                                    check_or_insert(*$2,Identifier::RECT);}
+                                    check_or_insert(*$2,RECT_DT);}
                 |CURVA ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::CURVE);}
+                                    check_or_insert(*$2,CURVE_DT);}
                 |PLANO ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::PLANE);}
+                                    check_or_insert(*$2,PLANE_DT);}
                 |TRIANGULO ID '{' Param ',' Param ',' Param '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::TRIANGLE);}
+                                    check_or_insert(*$2,TRIANGLE_DT);}
                 |CUADRILATERO ID '{' Param ',' Param ',' Param ',' Param '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::QUAD);}
+                                    check_or_insert(*$2,QUAD_DT);}
                 |ELIPSE ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::ELIPSE);}
+                                    check_or_insert(*$2,ELIPSE_DT);}
                 |CIRCUNFERENCIA ID '{' Param ',' Param '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::CIRC);}
+                                    check_or_insert(*$2,CIRC_DT);}
                 |PARABOLA ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::PARABOLE);}
+                                    check_or_insert(*$2,PARABOLE_DT);}
                 |HIPERBOLA ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::HYPERBOLE);}
+                                    check_or_insert(*$2,HYPERBOLE_DT);}
                 |POLIEDRO ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::POLYHEDRON);}
+                                    check_or_insert(*$2,POLYHEDRON_DT);}
                 |CILINDRO ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::CILINDRE);}
+                                    check_or_insert(*$2,CILINDRE_DT);}
                 |CONO ID '{' '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::CONE);}
+                                    check_or_insert(*$2,CONE_DT);}
                 |ESFERA ID '{' Param ',' Param '}' {$$ = new Declaration;
-                                    check_or_insert(*$2,Identifier::SPHERE);}
+                                    check_or_insert(*$2,SPHERE_DT);}
 ;
 
 Asignacion : ID '=' Expresion {$$ = new Asignation($1,$3);
@@ -154,7 +154,7 @@ Param : Color {$$= new ColorParam($1);}
         | Vect2d {$$= new Vect2dParam($1);}
         | Vect3d {$$= new Vect3dParam($1);}
         | ID {$$= new IdParam($1);
-        check(*$1);
+                check(*$1);
       }
 ;
 
@@ -166,59 +166,61 @@ Funcion : Dibujar {$$=$1;}
                 |FONDO Param {$$= new Background($2);}
 ;
 
-Dibujar : DIBUJAR ID COLOR Param { $$ = new Draw($2,$4); check(*$2);}
+Dibujar : DIBUJAR ID COLOR Param { $$ = new Draw($2,$4);
+    if(check(*$2))
+    {
+        Identifier* id = symbols.value(*$2);
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+            yyerror("ERROR: Solo se pueden dibujar figuras GEOM2D o GEOM3D");
+    if($4->type!=COLOR_DT)
+        yyerror("ERROR: El parametro de Color debe ser un Color valido rgba o un color predefinido" );
+    }
+}
 ;
 
-Rellenar : RELLENAR ID COLOR Param { $$ = new Fill($2,$4); check(*$2);}
+Rellenar : RELLENAR ID COLOR Param { $$ = new Fill($2,$4); check(*$2);
+    if(check(*$2))
+    {
+        Identifier* id = symbols.value(*$2);
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+            yyerror("ERROR: Solo se pueden dibujar figuras GEOM2D o GEOM3D");
+        if($4->type!=COLOR_DT){
+            yyerror("ERROR: El parametro de Color debe ser un Color valido rgba o un color predefinido" );
+        }
+
+    }
+}
 ;
 
 Rotar : ROTAR ID SOBRE Param Param { $$ = new Rotate($2,$4,$5);
     if(check(*$2))
     {
         Identifier* id = symbols.value(*$2);
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
             yyerror("ERROR: Solo se pueden rotar figuras GEOM2D o GEOM3D");
-        }else if($4->type == Param::ID){
-            IdParam* idparam = (IdParam*)$4;
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && $4->type!=Param::VECT2D){
-            yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && $4->type!=Param::VECT3D){
-            yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
+        else if(id->dimension == Identifier::GEOM2D && $4->type!=VECT2_DT){
+            yyerror("ERROR: El punto de rotacion ser un Vector2d" );
+        }else if(id->dimension == Identifier::GEOM3D && $4->type!=VECT3_DT){
+            yyerror("ERROR: El punto de rotacion debe ser un Vector3d" );
         }
+        if($5->type!=FLOAT_DT)
+            yyerror("ERROR: El parametro de rotacion debe ser un Flotante");
     }
 }
 ;
 
 Escalar : ESCALAR ID Param { $$ = new Scale($2,$3);
-    if(check(*$2))
-    {
-        Identifier* id = symbols.value(*$2);
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
-            yyerror("ERROR: Solo se pueden escalar figuras GEOM2D o GEOM3D");
-        }else if($3->type == Param::ID){
-            IdParam* idparam = (IdParam*)$3;
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && $3->type!=Param::VECT2D){
-            yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && $3->type!=Param::VECT3D){
-            yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
-        }
+if(check(*$2))
+{
+    Identifier* id = symbols.value(*$2);
+    if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
+        yyerror("ERROR: Solo se pueden escalar figuras GEOM2D o GEOM3D");
+    else if(id->dimension == Identifier::GEOM2D && $3->type!=VECT2_DT){
+        yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
+    }else if(id->dimension == Identifier::GEOM3D && $3->type!=VECT3_DT){
+        yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
     }
+}
 }
 ;
 
@@ -226,21 +228,11 @@ Trasladar : TRASLADAR ID Param { $$ = new Translate($2,$3);
     if(check(*$2))
     {
         Identifier* id = symbols.value(*$2);
-        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+        if(id->type == VECT2_DT||id->type == VECT3_DT || id->type == FLOAT_DT)
             yyerror("ERROR: Solo se pueden trasladar figuras GEOM2D o GEOM3D");
-        }else if($3->type == Param::ID){
-            IdParam* idparam = (IdParam*)$3;
-            if(check(*idparam->id)){
-                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
-                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
-                    yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
-                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
-                    yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
-                }
-            }
-        }else if(id->dimension == Identifier::GEOM2D && $3->type!=Param::VECT2D){
+        else if(id->dimension == Identifier::GEOM2D && $3->type!=VECT2_DT){
             yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
-        }else if(id->dimension == Identifier::GEOM3D && $3->type!=Param::VECT3D){
+        }else if(id->dimension == Identifier::GEOM3D && $3->type!=VECT3_DT){
             yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
         }
     }
@@ -268,7 +260,7 @@ Vect3d: '(' PTO_FLOT ',' PTO_FLOT ',' PTO_FLOT ')' {$$=new Vect3d($2,$4,$6);}
          
 %% 
 
-void check_or_insert(QString name,Identifier::ID_TYPE t){
+void check_or_insert(QString name,DATATYPE t){
     if(symbols.contains(name))
     {
         yyerror("ERROR: No se puede redefinir una variable ya declarada" );
