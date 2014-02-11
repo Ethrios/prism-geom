@@ -11,10 +11,12 @@
     extern int yyparse();
     extern FILE *yyin;
     extern int line;
+    extern int errors;
     extern QString tokens;
     extern QString syntax;
     extern Root* root;
     extern QHash<QString, Identifier*> symbols;
+    extern void reestart();
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -61,9 +63,9 @@ void MainWindow::on_pushButton_clicked()
     this->ui->tableWidget->setRowCount(0);
     ui->consola->append("Comenzando analisis...");
     on_actionGuardar_triggered();
-
+    reestart();
     yyin = fopen(mArchivo.toLocal8Bit().data(), "r" );
-
+    line = 0;
     do
     {
         yyparse();
@@ -76,16 +78,32 @@ void MainWindow::on_pushButton_clicked()
     tokens.clear();
     syntax.clear();
 
+
+
+
     QHash<QString, Identifier*>::const_iterator i = symbols.constBegin();
     int row = 0;
     while (i != symbols.constEnd()) {
         this->ui->tableWidget->insertRow(row);
         this->ui->tableWidget->setItem(row,0,new QTableWidgetItem(i.key()));
-        this->ui->tableWidget->setItem(row,1,new QTableWidgetItem(i.value()->type_string()));
+        QString type = i.value()->dimension_string();
+        type += i.value()->type_string();
+        this->ui->tableWidget->setItem(row,1,new QTableWidgetItem(type));
+        if(!i.value()->referenced){
+            this->ui->consola->append("Advertencia: Variable \"" + i.value()->name + "\" declarada pero nunca se usa");
+        }
         //cout << i.key() << ": " << i.value()-> << endl;
         ++i;
         ++row;
     }
+
+    if(errors>0){
+        QString m = "Analisis finalizo con ";
+        m+=QString::number(errors);
+        m+=" error(es)";
+        ui->consola->append(m);
+    }
+    errors = 0;
 
 }
 
@@ -138,4 +156,13 @@ void MainWindow::on_actionGuardar_Como_triggered()
         on_actionGuardar_triggered();
 
     }
+}
+
+void MainWindow::on_textEdit_cursorPositionChanged()
+{
+    QTextCursor cursor = ui->textEdit->textCursor();
+    int y = cursor.blockNumber() +1 ;
+    int x = cursor.columnNumber() +1;
+    QString text="Linea: "+QString::number(y)+", Col: "+QString::number(x);
+    this->ui->positionLabel->setText(text);
 }

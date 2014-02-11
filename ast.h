@@ -8,9 +8,27 @@ class Identifier{
 public:
     enum ID_TYPE{FLOAT,VECT2,VECT3,COLOR,POINT,RECT,CURVE,PLANE,TRIANGLE,QUAD,ELIPSE,CIRC,PARABOLE,HYPERBOLE,
                  POLYHEDRON,CILINDRE,CONE,SPHERE};
-    Identifier(QString name,ID_TYPE t){this->name=name;this->type=t;}
+    enum ID_DIMENSION{GEOM2D,GEOM3D,NONE};
+    Identifier(QString name,ID_TYPE t){
+        this->name=name;
+        this->type=t;
+        if(t==VECT2||t==POINT||t==RECT||t==CURVE||t==PLANE||t==TRIANGLE||t==QUAD||t==ELIPSE||t==CIRC||t==PARABOLE||t==HYPERBOLE)
+        {
+            this->dimension=GEOM2D;
+        }else if(t==VECT3||t==POLYHEDRON||t==CILINDRE||t==CONE||t==SPHERE)
+        {
+            this->dimension=GEOM3D;
+        }
+        else
+        {
+            this->dimension=NONE;
+        }
+        referenced=false;
+    }
     ID_TYPE type;
+    ID_DIMENSION dimension;
     QString name;
+    bool referenced;
     QString type_string(){
         switch (type) {
         case Identifier::FLOAT:
@@ -48,9 +66,18 @@ public:
         case Identifier::SPHERE:
             return "Esfera";
         default:
-            return "ERROR EN EL TIPO DE DATO";
+            return "ERROR";
         }
-
+    }
+    QString dimension_string(){
+        switch (dimension) {
+        case Identifier::GEOM2D:
+            return "GEOM2D::";
+        case Identifier::GEOM3D:
+            return "GEOM3D::";
+        default:
+            return "";
+        }
     }
 };
 
@@ -90,7 +117,8 @@ public:
 
 class Param{
 public:
-    enum PARAM_TYPE{FLOAT,VECT2D,VECT3D,ID,COLOR};
+    enum PARAM_TYPE{FLOAT,VECT2D,VECT3D,COLOR,ID};
+    //semantic_value what should this be?
     PARAM_TYPE type;
 };
 

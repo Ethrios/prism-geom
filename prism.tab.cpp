@@ -81,13 +81,15 @@
     extern FILE *yyin;
     extern int line;
 
+    int errors = 0;
+
     void check_or_insert(QString,Identifier::ID_TYPE);
-    void check(QString);
+    bool check(QString);
     //QT interface variable;
     QString syntax;
 
     //Error handling function
-    void yyerror(const char *s) { syntax+=s; }
+    void yyerror(const char *s);
 
     //ast root
     Root *root;
@@ -97,7 +99,7 @@
 
 
 /* Line 268 of yacc.c  */
-#line 101 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 103 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -164,7 +166,7 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 30 "/home/jesus/Compiladores/Prism/prism.y"
+#line 32 "/home/jesus/Compiladores/Prism/prism.y"
 
         float fval;
         QString* string;
@@ -189,7 +191,7 @@ typedef union YYSTYPE
 
 
 /* Line 293 of yacc.c  */
-#line 193 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 195 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -201,7 +203,7 @@ typedef union YYSTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 205 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 207 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
 
 #ifdef short
 # undef short
@@ -420,7 +422,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  38
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   179
+#define YYLAST   186
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  44
@@ -429,7 +431,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  51
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  168
+#define YYNSTATES  175
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -478,11 +480,11 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     7,     9,    12,    15,    18,    21,    25,
-      29,    33,    37,    43,    51,    56,    61,    71,    76,    81,
-      89,    94,    99,   104,   109,   114,   122,   126,   128,   132,
-     136,   140,   144,   146,   148,   150,   152,   154,   156,   158,
-     160,   162,   164,   167,   172,   177,   183,   187,   191,   201,
-     203,   209
+      29,    33,    37,    43,    51,    56,    61,    71,    83,    88,
+      96,   101,   106,   111,   116,   121,   129,   133,   135,   139,
+     143,   147,   151,   153,   155,   157,   159,   161,   163,   165,
+     167,   169,   171,   174,   179,   184,   190,   194,   198,   208,
+     210,   216
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -495,32 +497,33 @@ static const yytype_int8 yyrhs[] =
       51,    35,    -1,    18,    32,    34,    51,    36,    51,    35,
       -1,    19,    32,    34,    35,    -1,    20,    32,    34,    35,
       -1,    21,    32,    34,    51,    36,    51,    36,    51,    35,
-      -1,    22,    32,    34,    35,    -1,    23,    32,    34,    35,
-      -1,    24,    32,    34,    51,    36,    51,    35,    -1,    25,
-      32,    34,    35,    -1,    26,    32,    34,    35,    -1,    27,
-      32,    34,    35,    -1,    28,    32,    34,    35,    -1,    29,
-      32,    34,    35,    -1,    30,    32,    34,    51,    36,    51,
-      35,    -1,    32,    37,    50,    -1,    51,    -1,    51,    38,
-      51,    -1,    51,    39,    51,    -1,    51,    40,    51,    -1,
-      51,    41,    51,    -1,    58,    -1,    12,    -1,    59,    -1,
-      60,    -1,    32,    -1,    53,    -1,    54,    -1,    55,    -1,
-      57,    -1,    56,    -1,    11,    51,    -1,     5,    32,    13,
-      51,    -1,     6,    32,    13,    51,    -1,     7,    32,    10,
-      51,    51,    -1,     9,    32,    51,    -1,     8,    32,    51,
-      -1,    42,    12,    36,    12,    36,    12,    36,    12,    43,
-      -1,    31,    -1,    42,    12,    36,    12,    43,    -1,    42,
-      12,    36,    12,    36,    12,    43,    -1
+      -1,    22,    32,    34,    51,    36,    51,    36,    51,    36,
+      51,    35,    -1,    23,    32,    34,    35,    -1,    24,    32,
+      34,    51,    36,    51,    35,    -1,    25,    32,    34,    35,
+      -1,    26,    32,    34,    35,    -1,    27,    32,    34,    35,
+      -1,    28,    32,    34,    35,    -1,    29,    32,    34,    35,
+      -1,    30,    32,    34,    51,    36,    51,    35,    -1,    32,
+      37,    50,    -1,    51,    -1,    51,    38,    51,    -1,    51,
+      39,    51,    -1,    51,    40,    51,    -1,    51,    41,    51,
+      -1,    58,    -1,    12,    -1,    59,    -1,    60,    -1,    32,
+      -1,    53,    -1,    54,    -1,    55,    -1,    57,    -1,    56,
+      -1,    11,    51,    -1,     5,    32,    13,    51,    -1,     6,
+      32,    13,    51,    -1,     7,    32,    10,    51,    51,    -1,
+       9,    32,    51,    -1,     8,    32,    51,    -1,    42,    12,
+      36,    12,    36,    12,    36,    12,    43,    -1,    31,    -1,
+      42,    12,    36,    12,    43,    -1,    42,    12,    36,    12,
+      36,    12,    43,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    82,    82,    85,    86,    89,    90,    91,    94,    96,
-      98,   100,   102,   104,   106,   108,   110,   112,   114,   116,
-     118,   120,   122,   124,   126,   128,   132,   137,   138,   140,
-     142,   144,   148,   149,   150,   151,   152,   157,   158,   159,
-     160,   161,   162,   165,   168,   171,   174,   177,   180,   181,
-     184,   187
+       0,    84,    84,    89,    90,    93,    94,    95,    98,   100,
+     102,   104,   106,   108,   110,   112,   114,   116,   118,   120,
+     122,   124,   126,   128,   130,   132,   136,   141,   142,   144,
+     146,   148,   152,   153,   154,   155,   156,   161,   162,   163,
+     164,   165,   166,   169,   172,   175,   200,   225,   250,   260,
+     263,   266
 };
 #endif
 
@@ -569,7 +572,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     3,     1,     2,     2,     2,     2,     3,     3,
-       3,     3,     5,     7,     4,     4,     9,     4,     4,     7,
+       3,     3,     5,     7,     4,     4,     9,    11,     4,     7,
        4,     4,     4,     4,     4,     7,     3,     1,     3,     3,
        3,     3,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     2,     4,     4,     5,     3,     3,     9,     1,
@@ -592,12 +595,13 @@ static const yytype_uint8 yydefact[] =
       46,     0,     0,    11,     0,     9,     0,    10,     8,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,    26,    27,    43,    44,     0,     0,     0,
-       0,     0,     0,     0,    14,    15,     0,    17,    18,     0,
+       0,     0,     0,     0,    14,    15,     0,     0,    18,     0,
       20,    21,    22,    23,    24,     0,     0,     0,     0,     0,
       45,     0,     0,     0,     0,    12,     0,     0,     0,     0,
-      28,    29,    30,    31,     0,    50,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    13,     0,    19,    25,
-       0,    51,     0,     0,     0,     0,    16,    48
+       0,    28,    29,    30,    31,     0,    50,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    13,     0,
+       0,    19,    25,     0,    51,     0,     0,     0,     0,     0,
+      16,     0,    48,     0,    17
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -612,30 +616,31 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -43
 static const yytype_int16 yypact[] =
 {
-       3,   131,     7,   -24,   -22,   -19,   -13,   -12,   -10,    -9,
+       3,   145,     7,   -24,   -22,   -19,   -13,   -12,   -10,    -9,
       -8,    -7,    -6,    -5,    -3,    -2,    -1,     1,     5,     6,
-       8,     9,    10,    11,    12,    13,    14,     2,   103,   -43,
-      16,    17,    19,   -43,   -43,   -43,   -43,   -43,   -43,    -4,
-      40,    45,   -10,   -10,   -43,   -43,   -43,    44,   -43,   -43,
-     -43,   -43,   -28,    15,    20,    46,    25,    27,    29,    30,
-      32,    33,    34,    35,    36,    37,    38,    39,    41,    42,
+       8,     9,    10,    11,    12,    13,    14,     2,   117,   -43,
+      16,    17,    20,   -43,   -43,   -43,   -43,   -43,   -43,    -4,
+      42,    46,   -10,   -10,   -43,   -43,   -43,    45,   -43,   -43,
+     -43,   -43,   -28,    19,    21,    47,    24,    28,    30,    32,
+      33,    34,    35,    36,    37,    38,    39,    40,    41,    43,
      -10,   -43,   -43,   -43,   -43,   -43,   -10,   -10,   -10,   -43,
-     -43,    43,    62,   -43,    65,   -43,    66,   -43,   -43,   -10,
-     -10,    47,    48,   -10,    53,    54,   -10,    55,    56,    57,
-      58,    63,   -10,   -43,   -23,   -43,   -43,   -10,    68,    64,
-      67,    69,    71,    77,   -43,   -43,    98,   -43,   -43,   105,
-     -43,   -43,   -43,   -43,   -43,   107,   -10,   -10,   -10,   -10,
-     -43,   -32,    87,    89,    90,   -43,   -10,   -10,   -10,   -10,
-     -43,   -43,   -43,   -43,    92,   -43,   126,   121,   129,   132,
-     130,   133,   134,   -31,   158,   159,   -43,   -10,   -43,   -43,
-     160,   -43,   137,   135,   139,   136,   -43,   -43
+     -43,    44,    64,   -43,    66,   -43,    67,   -43,   -43,   -10,
+     -10,    48,    53,   -10,   -10,    54,   -10,    55,    56,    57,
+      58,    65,   -10,   -43,   -23,   -43,   -43,   -10,    69,    63,
+      68,    70,    72,    73,   -43,   -43,    74,    75,   -43,    76,
+     -43,   -43,   -43,   -43,   -43,    77,   -10,   -10,   -10,   -10,
+     -43,   -32,    89,    90,    91,   -43,   -10,   -10,   -10,   -10,
+     -10,   -43,   -43,   -43,   -43,    93,   -43,    78,    84,    79,
+      81,    83,   112,    85,   120,   -31,    96,   164,   -43,   -10,
+     -10,   -43,   -43,   166,   -43,   121,   136,   146,   144,   139,
+     -43,   -10,   -43,   148,   -43
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -43,   -43,   -43,   147,   -43,   -43,   -43,   -42,   -43,   -43,
-     -43,   -43,   -43,   -43,   124,    28,   123
+     -43,   -43,   -43,   156,   -43,   -43,   -43,   -42,   -43,   -43,
+     -43,   -43,   -43,   -43,   133,    29,   132
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -644,24 +649,25 @@ static const yytype_int16 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      79,    80,    44,    45,   144,   160,     1,    38,    39,    76,
-      40,   145,   161,    41,    82,   126,   127,   128,   129,    42,
+      79,    80,    44,    45,   145,   163,     1,    38,    39,    76,
+      40,   146,   164,    41,    82,   126,   127,   128,   129,    42,
       43,    45,    46,    52,    53,    54,    55,    56,   104,    57,
       58,    59,    47,    60,   105,   106,   107,    61,    62,    70,
       63,    64,    65,    66,    67,    68,    69,   112,   113,    73,
-      74,   116,    75,    77,   119,    78,    81,    84,    88,    89,
-     125,    90,    86,    91,    92,   130,    93,    94,    95,    96,
-      97,    98,    99,   100,   109,   101,   102,   110,   111,   108,
-     131,    85,   114,   115,   140,   141,   142,   143,   117,   118,
-     120,   121,   122,   123,   149,   150,   151,   152,   124,   146,
-     132,   147,   148,   133,   153,   134,   135,    71,     3,     4,
-       5,     6,     7,   136,     8,   164,     9,    10,    11,    12,
-      13,    14,    15,    16,    17,    18,    19,    20,    21,    22,
-      23,    24,    25,    26,   137,    27,     3,     4,     5,     6,
-       7,   138,     8,   139,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,   154,    27,   145,   155,   157,   156,   158,   159,
-     162,   163,   165,   160,   166,    72,    83,    87,   161,   167
+      74,   116,   117,    75,   119,    77,    78,    81,    89,    88,
+     125,    84,    90,    86,    91,   130,    92,    93,    94,    95,
+      96,    97,    98,    99,   100,   101,   109,   102,   110,   111,
+     108,   131,    85,   114,   141,   142,   143,   144,   115,   118,
+     120,   121,   122,   123,   150,   151,   152,   153,   154,   132,
+     124,   147,   148,   149,   133,   155,   134,   135,   165,   136,
+     137,   138,   139,   140,   156,   157,   158,   167,   168,   159,
+     161,    71,     3,     4,     5,     6,     7,   146,     8,   173,
+       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
+      19,    20,    21,    22,    23,    24,    25,    26,   160,    27,
+       3,     4,     5,     6,     7,   162,     8,   163,     9,    10,
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    20,
+      21,    22,    23,    24,    25,    26,   166,    27,   169,   164,
+     171,   170,   172,   174,    72,    83,    87
 };
 
 #define yypact_value_is_default(yystate) \
@@ -677,19 +683,20 @@ static const yytype_uint8 yycheck[] =
       32,    31,    32,    32,    32,    32,    32,    32,    70,    32,
       32,    32,    42,    32,    76,    77,    78,    32,    32,    37,
       32,    32,    32,    32,    32,    32,    32,    89,    90,    33,
-      33,    93,    33,    13,    96,    10,    12,    42,    12,    34,
-     102,    34,    42,    34,    34,   107,    34,    34,    34,    34,
-      34,    34,    34,    34,    12,    34,    34,    12,    12,    36,
-      12,    53,    35,    35,   126,   127,   128,   129,    35,    35,
-      35,    35,    35,    35,   136,   137,   138,   139,    35,    12,
-      36,    12,    12,    36,    12,    36,    35,     4,     5,     6,
-       7,     8,     9,    36,    11,   157,    13,    14,    15,    16,
-      17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
-      27,    28,    29,    30,    36,    32,     5,     6,     7,     8,
-       9,    36,    11,    36,    13,    14,    15,    16,    17,    18,
-      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    36,    32,    43,    36,    36,    35,    35,    35,
-      12,    12,    12,    36,    35,    28,    52,    54,    43,    43
+      33,    93,    94,    33,    96,    13,    10,    12,    34,    12,
+     102,    42,    34,    42,    34,   107,    34,    34,    34,    34,
+      34,    34,    34,    34,    34,    34,    12,    34,    12,    12,
+      36,    12,    53,    35,   126,   127,   128,   129,    35,    35,
+      35,    35,    35,    35,   136,   137,   138,   139,   140,    36,
+      35,    12,    12,    12,    36,    12,    36,    35,    12,    36,
+      36,    36,    36,    36,    36,    36,    35,   159,   160,    36,
+      35,     4,     5,     6,     7,     8,     9,    43,    11,   171,
+      13,    14,    15,    16,    17,    18,    19,    20,    21,    22,
+      23,    24,    25,    26,    27,    28,    29,    30,    36,    32,
+       5,     6,     7,     8,     9,    35,    11,    36,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    12,    32,    12,    43,
+      36,    35,    43,    35,    28,    52,    54
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -707,12 +714,13 @@ static const yytype_uint8 yystos[] =
       51,    12,    42,    58,    42,    59,    42,    60,    12,    34,
       34,    34,    34,    34,    34,    34,    34,    34,    34,    34,
       34,    34,    34,    50,    51,    51,    51,    51,    36,    12,
-      12,    12,    51,    51,    35,    35,    51,    35,    35,    51,
+      12,    12,    51,    51,    35,    35,    51,    51,    35,    51,
       35,    35,    35,    35,    35,    51,    38,    39,    40,    41,
       51,    12,    36,    36,    36,    35,    36,    36,    36,    36,
-      51,    51,    51,    51,    36,    43,    12,    12,    12,    51,
-      51,    51,    51,    12,    36,    36,    35,    36,    35,    35,
-      36,    43,    12,    12,    51,    12,    35,    43
+      36,    51,    51,    51,    51,    36,    43,    12,    12,    12,
+      51,    51,    51,    51,    51,    12,    36,    36,    35,    36,
+      36,    35,    35,    36,    43,    12,    12,    51,    51,    12,
+      35,    36,    43,    51,    35
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1549,49 +1557,51 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 82 "/home/jesus/Compiladores/Prism/prism.y"
-    {root = new Root((yyvsp[(2) - (3)].sentence_list)); syntax+="\nSyntax Correct\n";}
+#line 84 "/home/jesus/Compiladores/Prism/prism.y"
+    {root = new Root((yyvsp[(2) - (3)].sentence_list));
+                                        if(errors==0)
+                                            syntax+="\nSintaxis Correcta\n";}
     break;
 
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 85 "/home/jesus/Compiladores/Prism/prism.y"
+#line 89 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.sentence_list) = new std::vector<Sentence*>(); (yyval.sentence_list)->push_back((yyvsp[(1) - (1)].sentence));}
     break;
 
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 86 "/home/jesus/Compiladores/Prism/prism.y"
+#line 90 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.sentence_list)->push_back((yyvsp[(2) - (2)].sentence));}
     break;
 
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 89 "/home/jesus/Compiladores/Prism/prism.y"
+#line 93 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.sentence) = (yyvsp[(1) - (2)].declaration);}
     break;
 
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 90 "/home/jesus/Compiladores/Prism/prism.y"
+#line 94 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.sentence) = (yyvsp[(1) - (2)].asignation);}
     break;
 
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 91 "/home/jesus/Compiladores/Prism/prism.y"
+#line 95 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.sentence) = (yyvsp[(1) - (2)].function); }
     break;
 
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 94 "/home/jesus/Compiladores/Prism/prism.y"
+#line 98 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new FloatDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].fval));
                                     check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::FLOAT);}
     break;
@@ -1599,7 +1609,7 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 96 "/home/jesus/Compiladores/Prism/prism.y"
+#line 100 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Vect2dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect2d));
                                     check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT2);}
     break;
@@ -1607,7 +1617,7 @@ yyreduce:
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 98 "/home/jesus/Compiladores/Prism/prism.y"
+#line 102 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Vect3dDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].vect3d));
                                     check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::VECT3);}
     break;
@@ -1615,7 +1625,7 @@ yyreduce:
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 100 "/home/jesus/Compiladores/Prism/prism.y"
+#line 104 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new ColorDeclaration((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].color));
                                     check_or_insert(*(yyvsp[(2) - (3)].string),Identifier::COLOR);}
     break;
@@ -1623,7 +1633,7 @@ yyreduce:
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 102 "/home/jesus/Compiladores/Prism/prism.y"
+#line 106 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new PointDeclaration((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param));
                                     check_or_insert(*(yyvsp[(2) - (5)].string),Identifier::POINT);}
     break;
@@ -1631,7 +1641,7 @@ yyreduce:
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 104 "/home/jesus/Compiladores/Prism/prism.y"
+#line 108 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new RectDeclaration((yyvsp[(2) - (7)].string),(yyvsp[(4) - (7)].param),(yyvsp[(6) - (7)].param));
                                     check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::RECT);}
     break;
@@ -1639,7 +1649,7 @@ yyreduce:
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 106 "/home/jesus/Compiladores/Prism/prism.y"
+#line 110 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CURVE);}
     break;
@@ -1647,7 +1657,7 @@ yyreduce:
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 108 "/home/jesus/Compiladores/Prism/prism.y"
+#line 112 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PLANE);}
     break;
@@ -1655,7 +1665,7 @@ yyreduce:
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 110 "/home/jesus/Compiladores/Prism/prism.y"
+#line 114 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (9)].string),Identifier::TRIANGLE);}
     break;
@@ -1663,15 +1673,15 @@ yyreduce:
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 112 "/home/jesus/Compiladores/Prism/prism.y"
+#line 116 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
-                                    check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::QUAD);}
+                                    check_or_insert(*(yyvsp[(2) - (11)].string),Identifier::QUAD);}
     break;
 
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 114 "/home/jesus/Compiladores/Prism/prism.y"
+#line 118 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::ELIPSE);}
     break;
@@ -1679,7 +1689,7 @@ yyreduce:
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 116 "/home/jesus/Compiladores/Prism/prism.y"
+#line 120 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::CIRC);}
     break;
@@ -1687,7 +1697,7 @@ yyreduce:
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 118 "/home/jesus/Compiladores/Prism/prism.y"
+#line 122 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::PARABOLE);}
     break;
@@ -1695,7 +1705,7 @@ yyreduce:
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 120 "/home/jesus/Compiladores/Prism/prism.y"
+#line 124 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::HYPERBOLE);}
     break;
@@ -1703,7 +1713,7 @@ yyreduce:
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 122 "/home/jesus/Compiladores/Prism/prism.y"
+#line 126 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::POLYHEDRON);}
     break;
@@ -1711,7 +1721,7 @@ yyreduce:
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 124 "/home/jesus/Compiladores/Prism/prism.y"
+#line 128 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CILINDRE);}
     break;
@@ -1719,7 +1729,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 126 "/home/jesus/Compiladores/Prism/prism.y"
+#line 130 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (4)].string),Identifier::CONE);}
     break;
@@ -1727,7 +1737,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 128 "/home/jesus/Compiladores/Prism/prism.y"
+#line 132 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.declaration) = new Declaration;
                                     check_or_insert(*(yyvsp[(2) - (7)].string),Identifier::SPHERE);}
     break;
@@ -1735,7 +1745,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 132 "/home/jesus/Compiladores/Prism/prism.y"
+#line 136 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.asignation) = new Asignation((yyvsp[(1) - (3)].string),(yyvsp[(3) - (3)].expresion));
                                 check(*(yyvsp[(1) - (3)].string));
                               }
@@ -1744,14 +1754,14 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 137 "/home/jesus/Compiladores/Prism/prism.y"
+#line 141 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new ParamExpresion((yyvsp[(1) - (1)].param));}
     break;
 
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 138 "/home/jesus/Compiladores/Prism/prism.y"
+#line 142 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Plus((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la suma no concuerdan");} }
     break;
@@ -1759,7 +1769,7 @@ yyreduce:
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 140 "/home/jesus/Compiladores/Prism/prism.y"
+#line 144 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Less((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la resta no concuerdan");} }
     break;
@@ -1767,7 +1777,7 @@ yyreduce:
   case 30:
 
 /* Line 1806 of yacc.c  */
-#line 142 "/home/jesus/Compiladores/Prism/prism.y"
+#line 146 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Times((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la multiplicacion concuerdan");} }
     break;
@@ -1775,7 +1785,7 @@ yyreduce:
   case 31:
 
 /* Line 1806 of yacc.c  */
-#line 144 "/home/jesus/Compiladores/Prism/prism.y"
+#line 148 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.expresion) = new Division((yyvsp[(1) - (3)].param),(yyvsp[(3) - (3)].param));
                                 if((yyvsp[(1) - (3)].param)->type != (yyvsp[(3) - (3)].param)->type){yyerror("Error: Los parametros de la division no concuerdan");} }
     break;
@@ -1783,35 +1793,35 @@ yyreduce:
   case 32:
 
 /* Line 1806 of yacc.c  */
-#line 148 "/home/jesus/Compiladores/Prism/prism.y"
+#line 152 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new ColorParam((yyvsp[(1) - (1)].color));}
     break;
 
   case 33:
 
 /* Line 1806 of yacc.c  */
-#line 149 "/home/jesus/Compiladores/Prism/prism.y"
+#line 153 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new FloatParam((yyvsp[(1) - (1)].fval));}
     break;
 
   case 34:
 
 /* Line 1806 of yacc.c  */
-#line 150 "/home/jesus/Compiladores/Prism/prism.y"
+#line 154 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new Vect2dParam((yyvsp[(1) - (1)].vect2d));}
     break;
 
   case 35:
 
 /* Line 1806 of yacc.c  */
-#line 151 "/home/jesus/Compiladores/Prism/prism.y"
+#line 155 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new Vect3dParam((yyvsp[(1) - (1)].vect3d));}
     break;
 
   case 36:
 
 /* Line 1806 of yacc.c  */
-#line 152 "/home/jesus/Compiladores/Prism/prism.y"
+#line 156 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.param)= new IdParam((yyvsp[(1) - (1)].string));
         check(*(yyvsp[(1) - (1)].string));
       }
@@ -1820,112 +1830,187 @@ yyreduce:
   case 37:
 
 /* Line 1806 of yacc.c  */
-#line 157 "/home/jesus/Compiladores/Prism/prism.y"
+#line 161 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].draw);}
     break;
 
   case 38:
 
 /* Line 1806 of yacc.c  */
-#line 158 "/home/jesus/Compiladores/Prism/prism.y"
+#line 162 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].fill);}
     break;
 
   case 39:
 
 /* Line 1806 of yacc.c  */
-#line 159 "/home/jesus/Compiladores/Prism/prism.y"
+#line 163 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].rotate);}
     break;
 
   case 40:
 
 /* Line 1806 of yacc.c  */
-#line 160 "/home/jesus/Compiladores/Prism/prism.y"
+#line 164 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].translate);}
     break;
 
   case 41:
 
 /* Line 1806 of yacc.c  */
-#line 161 "/home/jesus/Compiladores/Prism/prism.y"
+#line 165 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)=(yyvsp[(1) - (1)].scale);}
     break;
 
   case 42:
 
 /* Line 1806 of yacc.c  */
-#line 162 "/home/jesus/Compiladores/Prism/prism.y"
+#line 166 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.function)= new Background((yyvsp[(2) - (2)].param));}
     break;
 
   case 43:
 
 /* Line 1806 of yacc.c  */
-#line 165 "/home/jesus/Compiladores/Prism/prism.y"
+#line 169 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.draw) = new Draw((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
     break;
 
   case 44:
 
 /* Line 1806 of yacc.c  */
-#line 168 "/home/jesus/Compiladores/Prism/prism.y"
+#line 172 "/home/jesus/Compiladores/Prism/prism.y"
     { (yyval.fill) = new Fill((yyvsp[(2) - (4)].string),(yyvsp[(4) - (4)].param)); check(*(yyvsp[(2) - (4)].string));}
     break;
 
   case 45:
 
 /* Line 1806 of yacc.c  */
-#line 171 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.rotate) = new Rotate((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param),(yyvsp[(5) - (5)].param));check(*(yyvsp[(2) - (5)].string));}
+#line 175 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.rotate) = new Rotate((yyvsp[(2) - (5)].string),(yyvsp[(4) - (5)].param),(yyvsp[(5) - (5)].param));
+    if(check(*(yyvsp[(2) - (5)].string)))
+    {
+        Identifier* id = symbols.value(*(yyvsp[(2) - (5)].string));
+        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+            yyerror("ERROR: Solo se pueden rotar figuras GEOM2D o GEOM3D");
+        }else if((yyvsp[(4) - (5)].param)->type == Param::ID){
+            IdParam* idparam = (IdParam*)(yyvsp[(4) - (5)].param);
+            if(check(*idparam->id)){
+                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
+                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
+                    yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
+                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
+                    yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
+                }
+            }
+        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(4) - (5)].param)->type!=Param::VECT2D){
+            yyerror("ERROR: El parametro de rotacion debe ser un Vector2d" );
+        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(4) - (5)].param)->type!=Param::VECT3D){
+            yyerror("ERROR: El parametro de rotacion debe ser un Vector3d" );
+        }
+    }
+}
     break;
 
   case 46:
 
 /* Line 1806 of yacc.c  */
-#line 174 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.scale) = new Scale((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));check(*(yyvsp[(2) - (3)].string));}
+#line 200 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.scale) = new Scale((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));
+    if(check(*(yyvsp[(2) - (3)].string)))
+    {
+        Identifier* id = symbols.value(*(yyvsp[(2) - (3)].string));
+        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+            yyerror("ERROR: Solo se pueden escalar figuras GEOM2D o GEOM3D");
+        }else if((yyvsp[(3) - (3)].param)->type == Param::ID){
+            IdParam* idparam = (IdParam*)(yyvsp[(3) - (3)].param);
+            if(check(*idparam->id)){
+                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
+                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
+                    yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
+                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
+                    yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
+                }
+            }
+        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=Param::VECT2D){
+            yyerror("ERROR: El parametro de escala debe ser un Vector2d" );
+        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=Param::VECT3D){
+            yyerror("ERROR: El parametro de escala debe ser un Vector3d" );
+        }
+    }
+}
     break;
 
   case 47:
 
 /* Line 1806 of yacc.c  */
-#line 177 "/home/jesus/Compiladores/Prism/prism.y"
-    { (yyval.translate) = new Translate((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));check(*(yyvsp[(2) - (3)].string));}
+#line 225 "/home/jesus/Compiladores/Prism/prism.y"
+    { (yyval.translate) = new Translate((yyvsp[(2) - (3)].string),(yyvsp[(3) - (3)].param));
+    if(check(*(yyvsp[(2) - (3)].string)))
+    {
+        Identifier* id = symbols.value(*(yyvsp[(2) - (3)].string));
+        if(id->type == Identifier::VECT2||id->type == Identifier::VECT3 || id->type == Identifier::FLOAT){
+            yyerror("ERROR: Solo se pueden trasladar figuras GEOM2D o GEOM3D");
+        }else if((yyvsp[(3) - (3)].param)->type == Param::ID){
+            IdParam* idparam = (IdParam*)(yyvsp[(3) - (3)].param);
+            if(check(*idparam->id)){
+                Identifier::ID_TYPE dim = symbols.value(*idparam->id)->type;
+                if(id->dimension == Identifier::GEOM2D && dim!=Identifier::VECT2){
+                    yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
+                }else if(id->dimension == Identifier::GEOM3D && dim!=Identifier::VECT3){
+                    yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
+                }
+            }
+        }else if(id->dimension == Identifier::GEOM2D && (yyvsp[(3) - (3)].param)->type!=Param::VECT2D){
+            yyerror("ERROR: El parametro de traslacion debe ser un Vector2d" );
+        }else if(id->dimension == Identifier::GEOM3D && (yyvsp[(3) - (3)].param)->type!=Param::VECT3D){
+            yyerror("ERROR: El parametro de traslacion debe ser un Vector3d" );
+        }
+    }
+}
     break;
 
   case 48:
 
 /* Line 1806 of yacc.c  */
-#line 180 "/home/jesus/Compiladores/Prism/prism.y"
-    {(yyval.color)=new Color((yyvsp[(2) - (9)].fval),(yyvsp[(4) - (9)].fval),(yyvsp[(6) - (9)].fval),(yyvsp[(8) - (9)].fval));}
+#line 250 "/home/jesus/Compiladores/Prism/prism.y"
+    {(yyval.color)=new Color((yyvsp[(2) - (9)].fval),(yyvsp[(4) - (9)].fval),(yyvsp[(6) - (9)].fval),(yyvsp[(8) - (9)].fval));
+                                                                if((yyvsp[(2) - (9)].fval)<0||(yyvsp[(2) - (9)].fval)>1)
+                                                                    yyerror("ERROR: El componente de rojo del color debe estar entre 0 y 1");
+                                                                if((yyvsp[(4) - (9)].fval)<0||(yyvsp[(4) - (9)].fval)>1)
+                                                                    yyerror("ERROR: El componente de verde del color debe estar entre 0 y 1");
+                                                                if((yyvsp[(6) - (9)].fval)<0||(yyvsp[(6) - (9)].fval)>1)
+                                                                    yyerror("ERROR: El componente de azul del color debe estar entre 0 y 1");
+                                                                if((yyvsp[(8) - (9)].fval)<0||(yyvsp[(8) - (9)].fval)>1)
+                                                                    yyerror("ERROR: El componente alpha (transparencia) del color debe estar entre 0 y 1");
+                                                                }
     break;
 
   case 49:
 
 /* Line 1806 of yacc.c  */
-#line 181 "/home/jesus/Compiladores/Prism/prism.y"
+#line 260 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.color)=new Color((yyvsp[(1) - (1)].string));}
     break;
 
   case 50:
 
 /* Line 1806 of yacc.c  */
-#line 184 "/home/jesus/Compiladores/Prism/prism.y"
+#line 263 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect2d)=new Vect2d((yyvsp[(2) - (5)].fval),(yyvsp[(4) - (5)].fval));}
     break;
 
   case 51:
 
 /* Line 1806 of yacc.c  */
-#line 187 "/home/jesus/Compiladores/Prism/prism.y"
+#line 266 "/home/jesus/Compiladores/Prism/prism.y"
     {(yyval.vect3d)=new Vect3d((yyvsp[(2) - (7)].fval),(yyvsp[(4) - (7)].fval),(yyvsp[(6) - (7)].fval));}
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1929 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
+#line 2014 "/home/jesus/Compiladores/Prism/prism.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2156,13 +2241,13 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 190 "/home/jesus/Compiladores/Prism/prism.y"
+#line 269 "/home/jesus/Compiladores/Prism/prism.y"
  
 
 void check_or_insert(QString name,Identifier::ID_TYPE t){
     if(symbols.contains(name))
     {
-        yyerror("ERROR: Variable ya declarada" );
+        yyerror("ERROR: No se puede redefinir una variable ya declarada" );
     }
     else
     {
@@ -2170,11 +2255,14 @@ void check_or_insert(QString name,Identifier::ID_TYPE t){
     }
 }
 
-void check(QString name){
+bool check(QString name){
     if(!symbols.contains(name))
     {
         yyerror("ERROR: Variable no declarada");
+        return false;
     }
+    symbols.value(name)->referenced=true;
+    return true;
 }
 
 int yywrap()  
@@ -2182,6 +2270,17 @@ int yywrap()
    return 1;  
 }  
 
+void yyerror(const char *s){
+    errors++;
+    syntax+="En la linea ";
+    syntax+=QString::number(line);
+    syntax+=":  ";
+    if(strcmp (s,"syntax error")==0)
+        syntax+="ERROR: Error de sintaxis ";
+    else
+        syntax+=s;
+    syntax+='\n';
+}
  
 
 

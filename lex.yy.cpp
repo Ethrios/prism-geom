@@ -802,7 +802,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "/home/jesus/Compiladores/Prism/prism.l"
+#line 17 "/home/jesus/Compiladores/Prism/prism.l"
 
 
 
@@ -891,227 +891,228 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "/home/jesus/Compiladores/Prism/prism.l"
+#line 20 "/home/jesus/Compiladores/Prism/prism.l"
 {    tokens+="<PTO_FLOT>, \""; tokens+=yytext; tokens+="\"\n";
                                                                         yylval.fval = atof(yytext);
 									return PTO_FLOT;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "/home/jesus/Compiladores/Prism/prism.l"
+#line 24 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
-									return INICIO;}
+                                                                        return INICIO;
+                                                                        }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "/home/jesus/Compiladores/Prism/prism.l"
+#line 28 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FIN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 29 "/home/jesus/Compiladores/Prism/prism.l"
+#line 31 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return DIBUJAR;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 32 "/home/jesus/Compiladores/Prism/prism.l"
+#line 34 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FONDO;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "/home/jesus/Compiladores/Prism/prism.l"
+#line 37 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return RELLENAR;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "/home/jesus/Compiladores/Prism/prism.l"
+#line 40 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return COLOR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 41 "/home/jesus/Compiladores/Prism/prism.l"
+#line 43 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ROTAR;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 44 "/home/jesus/Compiladores/Prism/prism.l"
+#line 46 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ESCALAR;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 47 "/home/jesus/Compiladores/Prism/prism.l"
+#line 49 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return TRASLADAR;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "/home/jesus/Compiladores/Prism/prism.l"
+#line 52 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return SOBRE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 53 "/home/jesus/Compiladores/Prism/prism.l"
+#line 55 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FLOTANTE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 56 "/home/jesus/Compiladores/Prism/prism.l"
+#line 58 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return VECT2D;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 59 "/home/jesus/Compiladores/Prism/prism.l"
+#line 61 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return VECT3D;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 62 "/home/jesus/Compiladores/Prism/prism.l"
+#line 64 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PUNTO;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "/home/jesus/Compiladores/Prism/prism.l"
+#line 67 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return RECTA;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 "/home/jesus/Compiladores/Prism/prism.l"
+#line 70 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CURVA;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 71 "/home/jesus/Compiladores/Prism/prism.l"
+#line 73 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PLANO;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 74 "/home/jesus/Compiladores/Prism/prism.l"
+#line 76 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return TRIANGULO;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 77 "/home/jesus/Compiladores/Prism/prism.l"
+#line 79 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CUADRILATERO;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 80 "/home/jesus/Compiladores/Prism/prism.l"
+#line 82 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ELIPSE;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 83 "/home/jesus/Compiladores/Prism/prism.l"
+#line 85 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CIRCUNFERENCIA;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 86 "/home/jesus/Compiladores/Prism/prism.l"
+#line 88 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return PARABOLA;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 89 "/home/jesus/Compiladores/Prism/prism.l"
+#line 91 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return HIPERBOLA;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 92 "/home/jesus/Compiladores/Prism/prism.l"
+#line 94 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return POLIEDRO;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 95 "/home/jesus/Compiladores/Prism/prism.l"
+#line 97 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CILINDRO;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 98 "/home/jesus/Compiladores/Prism/prism.l"
+#line 100 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return CONO;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 101 "/home/jesus/Compiladores/Prism/prism.l"
+#line 103 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return ESFERA;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 104 "/home/jesus/Compiladores/Prism/prism.l"
+#line 106 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<COLOR_PREDEF>, \"";tokens += yytext; tokens += "\"\n";
                                                                                 yylval.string = new QString(QString::fromLocal8Bit(yytext));
                                                                                 return COLOR_PREDEF;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 108 "/home/jesus/Compiladores/Prism/prism.l"
+#line 110 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<ID>, \" "; tokens +=yytext; tokens += "\"\n";
                                 yylval.string = new QString(QString::fromLocal8Bit(yytext));
 				return ID; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 112 "/home/jesus/Compiladores/Prism/prism.l"
+#line 114 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens += "<ASIGN>, \""; tokens += yytext; tokens += "\"\n";
 			return yytext[0]; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 115 "/home/jesus/Compiladores/Prism/prism.l"
+#line 117 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<OP>, \"" ;tokens += yytext; tokens += "\"\n";
 						return yytext[0]; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 117 "/home/jesus/Compiladores/Prism/prism.l"
+#line 119 "/home/jesus/Compiladores/Prism/prism.l"
 {tokens +=  "<DELIMITADOR>, \"" ;tokens += yytext; tokens += "\"\n";
 							return yytext[0]; }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 120 "/home/jesus/Compiladores/Prism/prism.l"
+#line 122 "/home/jesus/Compiladores/Prism/prism.l"
 { line++;}   /* count lines */ 
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 122 "/home/jesus/Compiladores/Prism/prism.l"
+#line 124 "/home/jesus/Compiladores/Prism/prism.l"
 /* eat up whitespace */
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 124 "/home/jesus/Compiladores/Prism/prism.l"
-{tokens +=  "<CARACTER_INVALIDO>, \""; tokens += yytext; tokens += "\"\n";}
+#line 126 "/home/jesus/Compiladores/Prism/prism.l"
+{tokens +=  "<CARACTER_INVALIDO>, \""; tokens += yytext; tokens += "\"\n"; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 126 "/home/jesus/Compiladores/Prism/prism.l"
+#line 128 "/home/jesus/Compiladores/Prism/prism.l"
 ECHO;
 	YY_BREAK
-#line 1115 "/home/jesus/Compiladores/Prism/lex.yy.cpp"
+#line 1116 "/home/jesus/Compiladores/Prism/lex.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2109,7 +2110,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 126 "/home/jesus/Compiladores/Prism/prism.l"
+#line 128 "/home/jesus/Compiladores/Prism/prism.l"
 
 
+
+void reestart(){
+    YY_FLUSH_BUFFER;
+}
 

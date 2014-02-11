@@ -10,6 +10,7 @@ QString tokens;
 int line = 0;
 %}
 
+
 DIGIT    [0-9]
 ID       [a-zA-Z][a-zA-Z0-9]*
 
@@ -21,7 +22,8 @@ ID       [a-zA-Z][a-zA-Z0-9]*
 									return PTO_FLOT;}
 
 Inicio			{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
-									return INICIO;}
+                                                                        return INICIO;
+                                                                        }
 
 Fin			{tokens +=  "<PAL_RES>, \" " ;tokens += yytext; tokens += "\"\n";
 									return FIN;}
@@ -121,6 +123,10 @@ NEGRO|AZUL|CIAN|GRIS|VERDE|MAGENTA|NARANJA|ROSADO|ROJO|BLANCO|AMARILLO       {to
 
 [ \t]+          /* eat up whitespace */
 
-.           {tokens +=  "<CARACTER_INVALIDO>, \""; tokens += yytext; tokens += "\"\n";}
+.           {tokens +=  "<CARACTER_INVALIDO>, \""; tokens += yytext; tokens += "\"\n"; }
 
 %%
+
+void reestart(){
+    YY_FLUSH_BUFFER;
+}

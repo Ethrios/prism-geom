@@ -39,6 +39,8 @@ private slots:
 
     void on_actionGuardar_Como_triggered();
 
+    void on_textEdit_cursorPositionChanged();
+
 private:
     Ui::MainWindow *ui;
     QString mArchivo;

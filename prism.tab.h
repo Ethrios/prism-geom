@@ -77,7 +77,7 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 30 "/home/jesus/Compiladores/Prism/prism.y"
+#line 32 "/home/jesus/Compiladores/Prism/prism.y"
 
         float fval;
         QString* string;

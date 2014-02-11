@@ -57,14 +57,27 @@
           <pointsize>12</pointsize>
          </font>
         </property>
+        <property name="acceptRichText">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
+         <widget class="QLabel" name="positionLabel">
+          <property name="text">
+           <string>Linea: 1, Col: 1</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
